@@ -14,4 +14,4 @@ pipelines:
         name: Evaluate with Nexus Lifecycle
         image: sonatype/nexus-iq-cli:1.1
         script:
-            - /sonatype/evaluate -i WebGoatBitBucket -t build webgoat/target
+            - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
