@@ -14,4 +14,5 @@ pipelines:
         artifacts:
           - WebGoatBitBucket-policy-eval-report.html
         script:
-            - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
+            - ls -lR
+              # - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
