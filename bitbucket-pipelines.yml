@@ -5,16 +5,15 @@ pipelines:
     - step:
         name: Build the code
         caches:
-          - maven
+          - target
         script:
           - mvn -f webgoat/pom.xml package
     - step:
         name: Evaluate with Nexus
         image: sonatype/nexus-iq-cli:1.1
         caches:
-          - maven
+          - target
         artifacts:
           - WebGoatBitBucket-policy-eval-report.html
         script:
-            - env
             - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build target
