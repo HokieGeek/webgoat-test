@@ -1,14 +1,19 @@
-# This is a sample build configuration for Java (Maven).
-# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
 image: maven:3.3.9
 
 pipelines:
   default:
     - step:
+        name: Build the code
         caches:
           - maven
-        script: # Modify the commands below to build your repository.
-          - mvn -B verify # -B batch mode makes Maven less verbose
+        script:
+          - mvn -f webgoat/pom.xml package
+    - step:
+        name: Evaluate with Nexus
+        image: sonatype/nexus-iq-cli:1.1
+        caches:
+          - maven
+        artifacts:
+          - WebGoatBitBucket-policy-eval-report.html
+        script:
+          - /sonatype/evaluate -i WebGoatBitBucket -t build target
