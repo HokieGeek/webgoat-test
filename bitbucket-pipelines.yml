@@ -6,6 +6,8 @@ pipelines:
         name: Build the code
         caches:
           - maven
+        artifacts:
+          - webgoat/target/*.war
         script:
           - mvn -f webgoat/pom.xml package
     - step:
@@ -14,5 +16,4 @@ pipelines:
         artifacts:
           - WebGoatBitBucket-policy-eval-report.html
         script:
-            - ls -lR
-              # - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
+            - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
