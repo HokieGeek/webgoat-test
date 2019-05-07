@@ -1,5 +1,15 @@
 image: maven:3.3.9
 
+build-step: &build-step
+  - step:
+      name: Build the code
+      caches:
+        - maven
+      artifacts:
+        - webgoat/target/*.war
+      script:
+        - mvn -f webgoat/pom.xml package
+
 lifecycle-evaluation: &lifecycle-evaluation
   name: Evaluate with Nexus Lifecycle
   image: sonatype/nexus-iq-cli:1.1
@@ -8,33 +18,30 @@ lifecycle-evaluation: &lifecycle-evaluation
 
 pipelines:
   default:
-    - step:
-        name: Build the code
-        caches:
-          - maven
-        artifacts:
-          - webgoat/target/*.war
-        script:
-          - mvn -f webgoat/pom.xml package
+    <<: *build-step
     - step:
         <<: *lifecycle-evaluation
         deployment: test
   branches:
     master:
+      <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
     feature/*:
+      <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
   pull-requests:
     '**':
+      <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
   tags:
     release-*:
+      <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: production
