@@ -18,30 +18,30 @@ lifecycle-evaluation: &lifecycle-evaluation
 
 pipelines:
   default:
-    <<: *build-step
+    - <<: *build-step
     - step:
         <<: *lifecycle-evaluation
         deployment: test
   branches:
     master:
-      <<: *build-step
+      - <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
     feature/*:
-      <<: *build-step
+      - <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
   pull-requests:
     '**':
-      <<: *build-step
+      - <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: staging
   tags:
     release-*:
-      <<: *build-step
+      - <<: *build-step
       - step:
           <<: *lifecycle-evaluation
           deployment: production
