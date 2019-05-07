@@ -1,5 +1,11 @@
 image: maven:3.3.9
 
+lifecycle-evaluation: &lifecycle-evaluation
+  name: Evaluate with Nexus Lifecycle
+  image: sonatype/nexus-iq-cli:1.1
+  script:
+      - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t ${NEXUS_IQ_STAGE} webgoat/target
+
 pipelines:
   default:
     - step:
@@ -11,7 +17,24 @@ pipelines:
         script:
           - mvn -f webgoat/pom.xml package
     - step:
-        name: Evaluate with Nexus Lifecycle
-        image: sonatype/nexus-iq-cli:1.1
-        script:
-            - /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatBitBucket -t build webgoat/target
+        <<: *lifecycle-evaluation
+        deployment: test
+  branches:
+    master:
+      - step:
+          <<: *lifecycle-evaluation
+          deployment: staging
+    feature/*:
+      - step:
+          <<: *lifecycle-evaluation
+          deployment: staging
+  pull-requests:
+    '**':
+      - step:
+          <<: *lifecycle-evaluation
+          deployment: staging
+  tags:
+    release-*:
+      - step:
+          <<: *lifecycle-evaluation
+          deployment: production
