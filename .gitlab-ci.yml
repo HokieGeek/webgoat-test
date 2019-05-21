@@ -25,6 +25,7 @@ evaluate-build:
     except:
         - /^stable-.*$/
         - tags
+        - master
 
 evaluate-staging:
     <<: *lifecycle-evaluation
