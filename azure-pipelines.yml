@@ -19,6 +19,10 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     goals: 'package'
 
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+
 - script: |
     curl -o $(Agent.TempDirectory)/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
     java -jar $(Agent.TempDirectory)/nexus-iq-cli.jar \
@@ -28,3 +32,14 @@ steps:
       -t build \
       webgoat/target
   displayName: 'Nexus Lifecycle evaluation'
+
+- script: |
+    docker run -it \
+      -v $(Pipeline.Workspace):/scan \
+      sonatype/nexus-iq-cli:1.1
+      -s $(NEXUS_IQ_URL) \
+      -a $(NEXUS_IQ_USERNAME):$(NEXUS_IQ_PASSWORD) \
+      -i WebGoatAzure \
+      -t build \
+      /scan/webgoat/target
+  displayName: 'Nexus Lifecycle evaluation2'
