@@ -17,7 +17,7 @@ import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TR;
 import org.apache.ecs.html.Table;
 import org.owasp.webgoat.session.WebSession;
-import sun.misc.BASE64Encoder;
+import java.util.Base64.Encoder;
 
 
 /***************************************************************************************************
@@ -180,7 +180,6 @@ public class HttpOnly extends LessonAdapter
 		String value = null;
 		byte[] buffer = null;
 		MessageDigest md = null;
-		BASE64Encoder encoder = new BASE64Encoder();
 
 		try
 		{
@@ -188,7 +187,7 @@ public class HttpOnly extends LessonAdapter
 			buffer = new Date().toString().getBytes();
 
 			md.update(buffer);
-			value = encoder.encode(md.digest());
+			value = java.util.Base64.getEncoder().encodeToString(md.digest());
 			original = value;
 
 		} catch (Exception e)

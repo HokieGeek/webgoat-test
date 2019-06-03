@@ -77,9 +77,9 @@ public class Encoding extends LessonAdapter
 
 	// local encoders
 
-	private static sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+	private static java.util.Base64.Decoder decoder = java.util.Base64.getDecoder();
 
-	private static sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
+	private static java.util.Base64.Encoder encoder = java.util.Base64.getEncoder();
 
 	// encryption constant
 
@@ -99,7 +99,7 @@ public class Encoding extends LessonAdapter
 	public static String base64Decode(String str) throws IOException
 	{
 
-		byte[] b = decoder.decodeBuffer(str);
+		byte[] b = decoder.decode(str);
 
 		return (new String(b));
 	}
@@ -147,7 +147,7 @@ public class Encoding extends LessonAdapter
 
 		byte[] b = str.getBytes();
 
-		return (encoder.encode(b));
+		return (encoder.encodeToString(b));
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class Encoding extends LessonAdapter
 	public static String base64Encode(byte[] b)
 	{
 
-		return (encoder.encode(b));
+		return (encoder.encodeToString(b));
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class Encoding extends LessonAdapter
 
 			passwordDecryptCipher.init(Cipher.DECRYPT_MODE, k, ps);
 
-			byte[] dec = decoder.decodeBuffer(str);
+			byte[] dec = decoder.decode(str);
 
 			byte[] utf8 = passwordDecryptCipher.doFinal(dec);
 
@@ -379,7 +379,7 @@ public class Encoding extends LessonAdapter
 
 			byte[] enc = passwordEncryptCipher.doFinal(utf8);
 
-			return encoder.encode(enc);
+			return encoder.encodeToString(enc);
 		}
 
 		catch (Exception e)

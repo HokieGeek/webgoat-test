@@ -171,7 +171,7 @@ public class BlindScript extends LessonAdapter
 		try {
 		    
 	        // Send data
-			String partner = new String(new sun.misc.BASE64Decoder().decodeBuffer(WEBGOAT_URL));
+			String partner = new String(java.util.Base64.getUrlDecoder().decode(WEBGOAT_URL));
 	        URL url = new URL(partner);
 	        URLConnection conn = url.openConnection();
 	        conn.setDoOutput(true);
