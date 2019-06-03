@@ -16,7 +16,18 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     goals: 'package'
 
-# - script: |
-#     echo Add other tasks to build, test, and deploy your project.
-#    echo See https://aka.ms/yaml
-#  displayName: 'Run a multi-line script'
+- task: JavaToolInstaller@0
+    inputs:
+      versionSpec: '8'
+      jdkArchitectureOption: x64
+
+- script: |
+    curl -o /tmp/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
+    java -version
+    # java -jar /tmp/nexus-iq-cli.jar \
+    #   -s ${NEXUS_IQ_URL} \
+    #   -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} \
+    #   -i WebGoatBitBucket \
+    #   -t ${NEXUS_IQ_STAGE} \
+    #   webgoat/target
+ displayName: 'Run Nexus Lifecycle evaluation'
