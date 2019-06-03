@@ -6,8 +6,6 @@ pool:
 
 variables:
 - group: nexus-lifecycle
-- name: iq_cli_jar
-  value: nexus-iq-cli-1.64.0-02.jar
 
 steps:
 - task: Maven@3
@@ -21,12 +19,9 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     goals: 'package'
 
-- task: DownloadSecureFile@1
-  inputs:
-    secureFile: https://download.sonatype.com/clm/scanner/$(iq_cli_jar)
-
 - script: |
-    java -jar $(Agent.TempDirectory)/$(iq_cli_jar) \
+    curl -o $(Agent.TempDirectory)/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
+    java -jar $(Agent.TempDirectory)/nexus-iq-cli.jar \
       -s $(NEXUS_IQ_URL) \
       -a $(NEXUS_IQ_USERNAME):$(NEXUS_IQ_PASSWORD) \
       -i WebGoatAzure \
