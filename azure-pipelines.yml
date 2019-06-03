@@ -20,6 +20,7 @@ steps:
   inputs:
     versionSpec: '8'
     jdkArchitectureOption: x64
+    jdkSourceOption: azureStorage
 
 - script: |
     curl -o /tmp/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
