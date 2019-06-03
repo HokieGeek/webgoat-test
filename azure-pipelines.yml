@@ -4,6 +4,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  - group: nexus-lifecycle
+
 steps:
 - task: Maven@3
   inputs:
