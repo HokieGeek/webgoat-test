@@ -35,7 +35,7 @@ steps:
 
 - script: |
     docker run \
-      -v $(Pipeline.Workspace):/scan \
+      -v $PWD:/scan \
       sonatype/nexus-iq-cli:1.1 \
       /sonatype/evaluate \
       -s $(NEXUS_IQ_URL) \
