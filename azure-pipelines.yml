@@ -23,7 +23,7 @@ steps:
 
 - task: DownloadSecureFile@1
   inputs:
-    secureFile: 'https://download.sonatype.com/clm/scanner/'$(iq_cli_jar)
+    secureFile: https://download.sonatype.com/clm/scanner/$(iq_cli_jar)
 
 - script: |
     java -jar $(Agent.TempDirectory)/$(iq_cli_jar) \
