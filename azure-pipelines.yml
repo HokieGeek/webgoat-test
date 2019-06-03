@@ -34,7 +34,7 @@ steps:
   displayName: 'Nexus Lifecycle evaluation'
 
 - script: |
-    docker run -it \
+    docker run \
       -v $(Pipeline.Workspace):/scan \
       sonatype/nexus-iq-cli:1.1 \
       -s $(NEXUS_IQ_URL) \
