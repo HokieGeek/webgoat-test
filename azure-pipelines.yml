@@ -4,11 +4,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  NEXUS_IQ_URL: http://iq:8070
-  NEXUS_IQ_USERNAME: admin
-  NEXUS_IQ_PASSWORD: notit
-
 steps:
 - task: Maven@3
   inputs:
