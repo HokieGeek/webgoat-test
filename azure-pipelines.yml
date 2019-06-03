@@ -4,6 +4,11 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  NEXUS_IQ_URL: http://iq:8070
+  NEXUS_IQ_USERNAME: admin
+  NEXUS_IQ_PASSWORD: notit
+
 steps:
 - task: Maven@3
   inputs:
@@ -16,19 +21,12 @@ steps:
     testResultsFiles: '**/TEST-*.xml'
     goals: 'package'
 
-    # - task: JavaToolInstaller@0
-    #   inputs:
-    #     versionSpec: '8'
-    #     jdkArchitectureOption: x64
-    #     jdkSourceOption: azureStorage
-
 - script: |
     curl -o /tmp/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
-    java -version
-    # java -jar /tmp/nexus-iq-cli.jar \
-    #   -s ${NEXUS_IQ_URL} \
-    #   -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} \
-    #   -i WebGoatBitBucket \
-    #   -t ${NEXUS_IQ_STAGE} \
-    #   webgoat/target
+    java -jar /tmp/nexus-iq-cli.jar \
+      -s ${NEXUS_IQ_URL} \
+      -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} \
+      -i WebGoatBitBucket \
+      -t build \
+      webgoat/target
   displayName: 'Nexus Lifecycle evaluation'
