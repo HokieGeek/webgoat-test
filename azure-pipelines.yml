@@ -17,9 +17,9 @@ steps:
     goals: 'package'
 
 - task: JavaToolInstaller@0
-    inputs:
-      versionSpec: '8'
-      jdkArchitectureOption: x64
+  inputs:
+    versionSpec: '8'
+    jdkArchitectureOption: x64
 
 - script: |
     curl -o /tmp/nexus-iq-cli.jar https://download.sonatype.com/clm/scanner/nexus-iq-cli-1.64.0-02.jar
