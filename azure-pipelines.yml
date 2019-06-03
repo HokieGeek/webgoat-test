@@ -30,4 +30,4 @@ steps:
     #   -i WebGoatBitBucket \
     #   -t ${NEXUS_IQ_STAGE} \
     #   webgoat/target
-  displayName: 'Run Nexus Lifecycle evaluation'
+  displayName: 'Nexus Lifecycle evaluation'
