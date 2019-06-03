@@ -36,7 +36,7 @@ steps:
 - script: |
     docker run -it \
       -v $(Pipeline.Workspace):/scan \
-      sonatype/nexus-iq-cli:1.1
+      sonatype/nexus-iq-cli:1.1 \
       -s $(NEXUS_IQ_URL) \
       -a $(NEXUS_IQ_USERNAME):$(NEXUS_IQ_PASSWORD) \
       -i WebGoatAzure \
