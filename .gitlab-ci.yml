@@ -10,11 +10,9 @@ build:
 
 .lifecycle-evaluation: &lifecycle-evaluation
     stage: test
-    image: registry.gitlab.com/hokiegeek/nexus-lifecycle-gitlab:1.65.0
+    image: sonatype/gitlab-nexus-iq-pipeline:1.1
     script:
-        - evaluate
-    after_script:
-       - gitlab
+        - /sonatype/evaluate -i WebGoatGitLab .
 
 evaluate-build:
     <<: *lifecycle-evaluation
