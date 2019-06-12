@@ -52,3 +52,8 @@ jobs:
 
               # - run: mvn dependency:go-offline
       - run: /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatCircleCI -t ${NEXUS_IQ_STAGE} webgoat/target
+workflows:
+  build_and_evaluate:
+    jobs:
+      - build
+      - lifecycle_evaluation
