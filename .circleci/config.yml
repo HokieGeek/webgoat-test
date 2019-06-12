@@ -54,9 +54,9 @@ jobs:
       - run: /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatCircleCI -t ${NEXUS_IQ_STAGE} webgoat/target
 workflows:
   version: 2
-  build_and_evaluate:
+  build:
     jobs:
       - build
+  evaluate:
+    jobs:
       - lifecycle_evaluation
-          requires:
-            - build
