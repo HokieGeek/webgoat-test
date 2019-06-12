@@ -46,12 +46,12 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-{{ checksum "webgoat/pom.xml" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
               # - run: mvn dependency:go-offline
-      - run: /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatCircleCI -t ${NEXUS_IQ_STAGE} webgoat/target
+      - run: /sonatype/evaluate -s ${NEXUS_IQ_URL} -a ${NEXUS_IQ_USERNAME}:${NEXUS_IQ_PASSWORD} -i WebGoatCircleCI -t build webgoat/target
 workflows:
   version: 2
   build-test-and-deploy:
