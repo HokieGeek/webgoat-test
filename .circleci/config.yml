@@ -58,3 +58,5 @@ workflows:
     jobs:
       - build
       - lifecycle_evaluation
+          requires:
+            - build
